@@ -48,5 +48,9 @@ public class Student {
 	public void setFee(int fee) {
 		this.fee = fee;
 	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", studentname=" + studentname + ", course=" + course + ", fee=" + fee + "]";
+	}
 
 }
