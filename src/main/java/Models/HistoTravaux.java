@@ -1,28 +1,28 @@
 package Models;
  
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne; 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany; 
 
 @Entity 
-public class Discussion {
+public class HistoTravaux {
    @Id
    @GeneratedValue(strategy= GenerationType.AUTO)
    @Column(updatable = false, nullable = false)
-   private int idDiscu; 
-   @OneToOne
-		private User user1;
-   @OneToOne
-   		private User user2;
-   @OneToMany
-   		private List<Message> messages;
-   public Discussion() { }
+   private int id;
+   private String description;
+   private String img; 
+   private Date date;
+   @ManyToOne
+   		public Categorie Offre; 
    
+   public HistoTravaux() { }
+
 }

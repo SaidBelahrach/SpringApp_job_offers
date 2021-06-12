@@ -24,11 +24,15 @@ public class User {
    private Boolean isConnected; 
    private String imgPath;
    @OneToMany( targetEntity=Besoin.class )  
-	private List<Offre> besoins; 
+	private List<Besoin> besoins; 
    @OneToMany( targetEntity=Demande.class )  
-	private List<Offre> demandes; 
+	private List<Demande> demandes; 
    @OneToMany( targetEntity=Comment.class )  
-	private List<Offre> comments; 
+	private List<Comment> comments; 
+   @OneToMany( targetEntity=Rating.class )  
+	private List<Rating> rating; 
+   @OneToMany( targetEntity=Reclamation.class )  
+	private List<Reclamation> reclamations; 
    public User() { }
 public int getIdUser() {
 	return idUser;

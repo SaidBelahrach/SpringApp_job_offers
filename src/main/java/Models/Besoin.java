@@ -5,7 +5,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany; 
 
 @Entity 
 public class Besoin {
@@ -15,6 +17,13 @@ public class Besoin {
    private int idCateg;
    private String nomCateg;
    private String DescriCateg; 
+   @ManyToOne
+   		public Categorie categorie;
+   @OneToMany
+   		public Comment comment;
+   @ManyToOne
+   		public User publisher;
+   
    public Besoin() { }
 public int getIdCateg() {
 	return idCateg;

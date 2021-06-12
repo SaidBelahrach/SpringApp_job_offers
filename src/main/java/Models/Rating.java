@@ -13,98 +13,66 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany; 
 
 @Entity 
-public class Demande {
+public class Rating {
    @Id
    @GeneratedValue(strategy= GenerationType.AUTO)
    @Column(updatable = false, nullable = false)
-   private int idRating;
+   private int num;
    private String points;
    private String comment;
    private Date date;
    @ManyToOne
-   		public User rater;
+   		public User demandeur;
    @ManyToOne
 		public Offre offre;
    
    		
-   public Demande() { }
+   public Rating() { }
 
-
-public Demande(int idRating, String points, String comment, Date date, User rater, Offre offre) {
+public Rating(int num, String points, String comment, Date date) {
 	super();
-	this.idRating = idRating;
+	this.num = num;
 	this.points = points;
 	this.comment = comment;
 	this.date = date;
-	this.rater = rater;
-	this.offre = offre;
 }
 
-
-public int getIdRating() {
-	return idRating;
+public int getNum() {
+	return num;
 }
 
-
-public void setIdRating(int idRating) {
-	this.idRating = idRating;
+public void setNum(int num) {
+	this.num = num;
 }
-
 
 public String getPoints() {
 	return points;
 }
 
-
 public void setPoints(String points) {
 	this.points = points;
 }
-
 
 public String getComment() {
 	return comment;
 }
 
-
 public void setComment(String comment) {
 	this.comment = comment;
 }
-
 
 public Date getDate() {
 	return date;
 }
 
-
 public void setDate(Date date) {
 	this.date = date;
 }
 
-
-public User getRater() {
-	return rater;
-}
-
-
-public void setRater(User rater) {
-	this.rater = rater;
-}
-
-
-public Offre getOffre() {
-	return offre;
-}
-
-
-public void setOffre(Offre offre) {
-	this.offre = offre;
-}
-
-
 @Override
 public String toString() {
-	return "Demande [idRating=" + idRating + ", points=" + points + ", comment=" + comment + ", date=" + date
-			+ ", rater=" + rater + ", offre=" + offre + "]";
+	return "Demande [num=" + num + ", points=" + points + ", comment=" + comment + ", date=" + date + "]";
 }
+   
 
 }
