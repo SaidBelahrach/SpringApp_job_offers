@@ -22,8 +22,9 @@ public class Offre {
    @Column(updatable = false, nullable = false)
    private int idService;
    private String nom;
-   private Float prix; 
-   private String descri; 
+   private String prix; 
+   private String descri;  
+   private String address; 
    private String[] imgs;
    
    @OneToMany(mappedBy = "offre", fetch = FetchType.LAZY,  //nom de attr de rela
@@ -42,7 +43,7 @@ public class Offre {
    
    
    public Offre() { }
-public Offre(int idService, String nom, Float prix, String descri, String[] imgs) {
+public Offre(int idService, String nom, String prix, String descri, String[] imgs) {
 	super();
 	this.idService = idService;
 	this.nom = nom;
@@ -62,10 +63,10 @@ public String getNom() {
 public void setNom(String nom) {
 	this.nom = nom;
 }
-public Float getPrix() {
+public String getPrix() {
 	return prix;
 }
-public void setPrix(Float prix) {
+public void setPrix(String prix) {
 	this.prix = prix;
 }
 public String getDescri() {
@@ -79,6 +80,13 @@ public String[] getImgs() {
 }
 public void setImgs(String[] imgs) {
 	this.imgs = imgs;
+}
+
+public String getAddress() {
+	return address;
+}
+public void setAddress(String address) {
+	this.address = address;
 }
 @Override
 public String toString() {
