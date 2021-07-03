@@ -1,6 +1,6 @@
 package com.app.jobs.Models;
  
-
+ 
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,6 +26,9 @@ public class User {
    
    @OneToMany(mappedBy = "creator", targetEntity=Offre.class )  
 	private List<Offre> user_offres; 
+   
+   @OneToMany(mappedBy = "commenter", targetEntity=Comment.class )  
+	private List<Offre> user_comments; 
 //   @OneToMany( targetEntity=Besoin.class )  
 //	private List<Besoin> besoins; 
 //   @OneToMany( targetEntity=Demande.class )  
@@ -49,9 +52,9 @@ public String getEmail() {
 public void setEmail(String email) {
 	this.email = email;
 }
-public String getPassword() {
-	return password;
-}
+//public String getPassword() {
+//	return password;
+//}
 public void setPassword(String password) {
 	this.password = password;
 }

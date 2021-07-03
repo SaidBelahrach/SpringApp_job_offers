@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
   
 @Entity(name = "Offre") 
 public class Offre {
@@ -31,14 +33,15 @@ public class Offre {
            cascade = CascadeType.ALL)
    private List<HistoTravaux> mes_travaux;
    
+   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
    @ManyToOne( fetch = FetchType.LAZY, optional = false)
    @JoinColumn(name = "categorie_id", nullable = false)
-   private Categorie categorie;
+   public Categorie categorie;
    
-   
+   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
    @ManyToOne( fetch = FetchType.LAZY, optional = false)
    @JoinColumn(name = "user_id", nullable = false) //fk column name
-   private User creator;
+   public User creator;
    
    
    
