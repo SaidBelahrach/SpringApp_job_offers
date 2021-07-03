@@ -19,6 +19,7 @@ public class User {
    private String email;
    private String password; 
    private String nomComplet;
+   private String idFirebase;
    private String tel;
    private String adress;
    private Boolean isConnected; 
@@ -88,17 +89,28 @@ public String getImgPath() {
 public void setImgPath(String imgPath) {
 	this.imgPath = imgPath;
 }
-public User(int idUser, String email, String password, String nomComplet, String tel, String adress,
-		Boolean isConnected, String imgPath) {
+
+public String getIdFirebase() {
+	return idFirebase;
+}
+public void setIdFirebase(String idFirebase) {
+	this.idFirebase = idFirebase;
+}
+
+public User(int idUser, String email, String password, String nomComplet, String idFirebase, String tel, String adress,
+		Boolean isConnected, String imgPath, List<Offre> user_offres, List<Offre> user_comments) {
 	super();
 	this.idUser = idUser;
 	this.email = email;
 	this.password = password;
 	this.nomComplet = nomComplet;
+	this.idFirebase = idFirebase;
 	this.tel = tel;
 	this.adress = adress;
 	this.isConnected = isConnected;
 	this.imgPath = imgPath;
+	this.user_offres = user_offres;
+	this.user_comments = user_comments;
 }
 @Override
 public String toString() {
