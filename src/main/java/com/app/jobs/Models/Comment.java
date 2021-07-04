@@ -23,11 +23,11 @@ public class Comment {
    private String txt;
    private Date date; 
    
-   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-   @ManyToOne( fetch = FetchType.LAZY, optional = false)
-   @JoinColumn(name = "commenter_id", nullable = false) //fk column name
-   public User commenter;
-   
+//   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//   @ManyToOne( fetch = FetchType.LAZY, optional = false)
+//   @JoinColumn(name = "commenter_id", nullable = false) //fk column name
+//   public User commenter;
+//   
    public Comment() { }
 public int getIdComment() {
 	return idComment;

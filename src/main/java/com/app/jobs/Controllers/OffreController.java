@@ -38,14 +38,7 @@ public class OffreController {
 	@Autowired
 	private CategorieRepo CategorieRepo; 
 	 private static final Logger logger = (Logger) LoggerFactory.getLogger(CategorieController.class);
-	@GetMapping("/test")
-	public String test() {
-		//repo.save(new Student(3,"Said","dedez",5));
-	  	//Offre o=new Offre(1,"rr",5.1f,"ee",null); //(int idService, String nom, Float prix, String descri, String[] imgs)
-	  
-		// or.save(o);
-		return "Index inserer";
-	}
+	 
 	@GetMapping("offres")
 	public List<Offre> Index(){ 
 		 return repo.findAll();

@@ -46,6 +46,9 @@ public class Offre {
    public User creator;
    
    
+   @OneToMany(mappedBy = "rated_offre", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   private List<Rating> ratings;
+   
    
    public Offre() { }
 public Offre(int idService, String nom, String prix, String descri, String[] imgs) {

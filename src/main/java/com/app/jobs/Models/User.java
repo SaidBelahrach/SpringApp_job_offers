@@ -3,13 +3,13 @@ package com.app.jobs.Models;
  
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany; 
-
 @Entity 
 public class User {
    @Id
@@ -25,11 +25,16 @@ public class User {
    private Boolean isConnected; 
    private String imgPath;
    
+
+   @OneToMany(mappedBy = "user_rator", targetEntity=Rating.class)
+   private List<Rating> user_ratings;
+   
    @OneToMany(mappedBy = "creator", targetEntity=Offre.class )  
 	private List<Offre> user_offres; 
    
-   @OneToMany(mappedBy = "commenter", targetEntity=Comment.class )  
-	private List<Offre> user_comments; 
+//   @OneToMany(mappedBy = "commenter", targetEntity=Comment.class )  
+//	private List<Offre> user_comments;  
+      
 //   @OneToMany( targetEntity=Besoin.class )  
 //	private List<Besoin> besoins; 
 //   @OneToMany( targetEntity=Demande.class )  
@@ -109,8 +114,7 @@ public User(int idUser, String email, String password, String nomComplet, String
 	this.adress = adress;
 	this.isConnected = isConnected;
 	this.imgPath = imgPath;
-	this.user_offres = user_offres;
-	this.user_comments = user_comments;
+	this.user_offres = user_offres; 
 }
 @Override
 public String toString() {

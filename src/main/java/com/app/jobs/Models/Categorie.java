@@ -16,14 +16,15 @@ public class Categorie {
    @Column(updatable = false, nullable = false)
    private int idCateg;
    private String nomCateg;
-   private String DescriCateg; 
+   private String DescriCateg;  
+   private String img; 
    @OneToMany(mappedBy = "categorie", targetEntity=Offre.class )  
 	private List<Offre> offres; 
 //   @OneToMany( targetEntity=Besoin.class )  
 //	private List<Offre> besoins; 
    
 	public Categorie() { }
-	public Categorie(int idCateg, String nomCateg, String DescriCateg) {
+	public Categorie(int idCateg, String nomCateg, String DescriCateg,String img) {
 	
 		this.idCateg = idCateg;
 		this.nomCateg = nomCateg;
@@ -50,6 +51,12 @@ public class Categorie {
 	@Override
 	public String toString() {
 		return "Categorie [idCateg=" + idCateg + ", nomCateg=" + nomCateg + ", DescriCateg=" + DescriCateg + "]";
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 
