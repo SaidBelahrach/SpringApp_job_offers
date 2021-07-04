@@ -1,6 +1,7 @@
 package com.app.jobs.Models;
  
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Offre {
    private String prix; 
    private String descri;  
    private String address; 
+   private Date date; 
    private String[] imgs;
    
    @OneToMany(mappedBy = "offre", fetch = FetchType.LAZY,  //nom de attr de rela
@@ -91,10 +93,30 @@ public String getAddress() {
 public void setAddress(String address) {
 	this.address = address;
 }
+public Date getDate() {
+	return date;
+}
+public void setDate(Date date) {
+	this.date = date;
+}
 @Override
 public String toString() {
 	return "Service [idService=" + idService + ", nom=" + nom + ", prix=" + prix + ", descri=" + descri + ", imgs="
 			+ Arrays.toString(imgs) + "]";
+}
+public Offre(int idService, String nom, String prix, String descri, String address, Date date, String[] imgs,
+		List<HistoTravaux> mes_travaux, Categorie categorie, User creator) {
+	super();
+	this.idService = idService;
+	this.nom = nom;
+	this.prix = prix;
+	this.descri = descri;
+	this.address = address;
+	this.date = date;
+	this.imgs = imgs;
+	this.mes_travaux = mes_travaux;
+	this.categorie = categorie;
+	this.creator = creator;
 }
    
 

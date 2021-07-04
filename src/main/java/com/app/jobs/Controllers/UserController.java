@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody; 
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController; 
 import com.app.jobs.Models.User; 
 import com.app.jobs.Repositories.UserRepo; 
@@ -23,23 +24,29 @@ public class UserController {
 		 return userRepo.findAll();
 	}
 	
-	@GetMapping("/users/{id}")
-	public Optional<User> find(@PathVariable("id") int id){ 
-		return userRepo.findById(id);
-	} 
-
-	@PostMapping("/Users")
+//	@GetMapping("/users/{id}")
+//	public Optional<User> find(@PathVariable("idFirebase") int id){ 
+//		userRepo.findByidFirebase("eee");
+//		return userRepo.findById(id);
+//	} 
+	@GetMapping("/users/idFirebase")
+	public Optional<User> getUserByidFirebase(@RequestParam("idFirebase") String idFirebase){ 
+		return Optional.ofNullable(userRepo.findByidFirebase(idFirebase));
+	}
+	@CrossOrigin
+	@PostMapping("/users")
 	public List<User> add(@RequestBody  User user ){  
 		userRepo.save(user);	  
 		return userRepo.findAll(); 
 	} 
 //	
 	@PatchMapping("/users")
-	public List<User> update(@RequestBody  User user ){ 
+	public List<User> update(@RequestBody  User user){ 
 //		Offre user= userRepo.findById(user.getIdService()).get();
 //		o.setNom("newwwwwwwwwww");
 //		userRepo.save(o);	 
 //		System.out.println("updated "+offre.getIdService());
+		userRepo.save(user);
 		return userRepo.findAll(); 
 	} 
 	@CrossOrigin

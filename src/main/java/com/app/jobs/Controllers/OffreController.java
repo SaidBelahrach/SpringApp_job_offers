@@ -86,13 +86,14 @@ public class OffreController {
     								  @RequestParam("address") String address,
     								  @RequestParam("categorie") String categorie,
     								  @RequestParam("prix") String prix) { 
+
+		System.out.println(Integer.parseInt(categorie));
 		if(!file.isEmpty()) {
 			// Get the file name, including the suffix			
 			String fileName = file.getOriginalFilename();
 			File currDir = new File(""); 
 			String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
-
-			System.out.println(nom+ descri+address);
+ 
 			try {
 				 // This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
 				FileUtil.fileupload(file.getBytes(), path , fileName);
@@ -103,19 +104,21 @@ public class OffreController {
 			}
 			String[] imgs = new String[]{"http://localhost:8080/"+fileName};
 			Offre o=new Offre(0, nom, prix, descri,imgs);
-			o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
-			o.creator=userRepo.findById(1).get(); 
+			try {
+				o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
+				o.creator=userRepo.findById(1).get(); 
+				repo.save(o);	 	
+				System.out.println("added "+o.getNom());
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			
-			repo.save(o);	 
-			System.out.println("added "+o.getNom());
-//			 
-			 // Then create the corresponding entity class, add the following path, and then write through the database operation method			
-			//FilePath biaopath = new FilePath();
-			//biaopath.setPath("http://localhost:8080/"+fileName);
-		//	filePathRepository.save(biaopath);
+			
+//			 */
+		 
 			
 		} 
-		
+	
 		
         logger.info(String.format("File name '%s' uploaded successfully.", file.getOriginalFilename()));
         return ResponseEntity.ok().build();
