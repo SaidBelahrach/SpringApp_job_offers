@@ -53,7 +53,7 @@ public class UserController {
 	}
 	@CrossOrigin
 	@PostMapping("/users")
-	public List<User> add(@RequestParam("file") MultipartFile file,
+	public List<User> add(
 			  @RequestParam("idUser") int idUser,
 			  @RequestParam("nomComplet") String nomComplet,
 			  @RequestParam("email") String email,
@@ -66,36 +66,32 @@ public class UserController {
 
 		User usr=userRepo.findByidFirebase(idFirebase); 
 		if(usr!=null) return userRepo.findAll(); 
-		if(!file.isEmpty()) {
-			String fileName = file.getOriginalFilename();
-			File currDir = new File(""); 
-			String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
-			
-			try {
-			// This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
-				FileUtil.fileupload(file.getBytes(), path , fileName);
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			String imgPath="http://localhost:8080/"+fileName;
+			String imgPath="http://localhost:8080/person2.png";
 			User user=new User(idUser, email, password, nomComplet, idFirebase, tel, adress, specialite, false, imgPath, null, null);
 			try {
 			 	 userRepo.save(user);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			} 
-		} 
 		return userRepo.findAll(); 
 	} 
 //	
 	@PatchMapping("/users")
 	public List<User> update(@RequestBody  User user){ 
-//		Offre user= userRepo.findById(user.getIdService()).get();
-//		o.setNom("newwwwwwwwwww");
-//		userRepo.save(o);	 
-//		System.out.println("updated "+offre.getIdService());
-		userRepo.save(user);
+		User usr=userRepo.findByidFirebase(user.getIdFirebase());
+		
+		usr.setAdress(user.getAdress());
+		usr.setEmail(user.getEmail()); 
+		if(user.getImgPath()!= null) {
+			usr.setImgPath(user.getImgPath()); 
+		}else {
+			usr.setImgPath("http://localhost:8080/person2.png"); 
+		}
+	
+		usr.setSpecialite(user.getSpecialite());
+		usr.setTel(user.getTel());
+		userRepo.save(usr);
+		
 		return userRepo.findAll(); 
 	} 
 	@CrossOrigin
