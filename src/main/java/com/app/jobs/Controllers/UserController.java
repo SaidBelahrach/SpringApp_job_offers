@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController; 
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.jobs.Models.Offre;
+import com.app.jobs.Models.Rating;
+import com.app.jobs.Models.Statis;
 import com.app.jobs.Models.User; 
 import com.app.jobs.Repositories.UserRepo; 
 @RestController
@@ -22,21 +26,35 @@ public class UserController {
 	@GetMapping("/users")
 	public List<User> Index(){ 
 		 return userRepo.findAll();
-	}
+	} 
+	@GetMapping("/users/statistics/{id}")
+	public Statis statistics(@PathVariable int id){ 
+		User user=userRepo.findById(id).get();
+		 float t=0;
+		 int i=0;
+		for (Offre o : user.user_offres  ) {
+			for (Rating r : o.ratings ) {
+				t+=r.getPoints();
+				i++;
+			} 
+		}
+		System.out.println(i+" "+t);
+		Statis statis=new Statis(user.user_offres.size(), t/i);
+		return statis;
+	} 
 	
-//	@GetMapping("/users/{id}")
-//	public Optional<User> find(@PathVariable("idFirebase") int id){ 
-//		userRepo.findByidFirebase("eee");
-//		return userRepo.findById(id);
-//	} 
-	@GetMapping("/users/idFirebase")
+	@GetMapping("/users/getuser")
 	public Optional<User> getUserByidFirebase(@RequestParam("idFirebase") String idFirebase){ 
 		return Optional.ofNullable(userRepo.findByidFirebase(idFirebase));
 	}
 	@CrossOrigin
 	@PostMapping("/users")
 	public List<User> add(@RequestBody  User user ){  
-		userRepo.save(user);	  
+		try {
+			userRepo.save(user);	  
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return userRepo.findAll(); 
 	} 
 //	

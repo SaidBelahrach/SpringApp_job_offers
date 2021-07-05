@@ -1,6 +1,8 @@
 package com.app.jobs.Controllers;  
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional; 
 import org.slf4j.LoggerFactory;
@@ -56,33 +58,74 @@ public class OffreController {
 //		return repo.findAll(); 
 //	} 
 //	
+	@CrossOrigin
 	@PatchMapping("/offres")
-	public List<Offre> update(@RequestBody  Offre offre ){ 
-		Offre o= repo.findById(offre.getIdService()).get();
-		o.setNom("newwwwwwwwwww");
-		repo.save(o);	 
-		System.out.println("updated "+offre.getIdService());
-		return repo.findAll(); 
-	} 
+	public List<Offre> update(@RequestParam("file") MultipartFile file,
+			  @RequestParam("idService") int idService,
+			  @RequestParam("nom") String nom,
+			  @RequestParam("descri") String descri,
+			  @RequestParam("address") String address,
+			  @RequestParam("categorie") String categorie,
+			  @RequestParam("creatorID") String creatorID,
+			  @RequestParam("prix") String prix) { 
+		if(!file.isEmpty()) {
+		String fileName = file.getOriginalFilename();
+		File currDir = new File(""); 
+		String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
+		
+		try {
+		// This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
+			FileUtil.fileupload(file.getBytes(), path , fileName);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		String[] imgs = new String[]{"http://localhost:8080/"+fileName};
+		Offre o=repo.findById(idService).get();
+		o.setImgs(imgs);
+		o.setAddress(address);
+		o.setDescri(descri);
+		o.setNom(nom);
+		o.setPrix(prix); 
+		System.out.println(o);
+		try {
+			o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
+			o.creator=userRepo.findByidFirebase(creatorID); 
+			repo.save(o);	 	 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} 
+		}  
+		logger.info(String.format("File name '%s' uploaded successfully.", file.getOriginalFilename()));
+		 return repo.findAll();
+}
+	
+//	
+//	(@RequestBody  Offre offre ){ 
+//		Offre o= repo.findById(offre.getIdService()).get();
+//		o.setNom("updated "+offre);
+//		repo.save(o);	 
+////		System.out.println("updated "+offre.getIdService());
+//		return repo.findAll(); 
+//	} 
 	@CrossOrigin
 	@DeleteMapping("/offres/{id}")
 	public List<Offre> delete(@PathVariable int id )  { 
 		repo.delete(repo.findById(id).get());
 		System.out.println("deleted "+id);
 		return repo.findAll();
-	}	/* */
+	}	 
 	@CrossOrigin
 	@PostMapping(value = "/offres", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity  uploadFile(@RequestParam("file") MultipartFile file,
+    public ResponseEntity  add(@RequestParam("file") MultipartFile file,
     								  @RequestParam("nom") String nom,
     								  @RequestParam("descri") String descri,
     								  @RequestParam("address") String address,
     								  @RequestParam("categorie") String categorie,
+    								  @RequestParam("creatorID") String creatorID,
     								  @RequestParam("prix") String prix) { 
-
-		System.out.println(Integer.parseInt(categorie));
+ 
 		if(!file.isEmpty()) {
-			// Get the file name, including the suffix			
 			String fileName = file.getOriginalFilename();
 			File currDir = new File(""); 
 			String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
@@ -91,28 +134,24 @@ public class OffreController {
 				 // This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
 				FileUtil.fileupload(file.getBytes(), path , fileName);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 			String[] imgs = new String[]{"http://localhost:8080/"+fileName};
 			Offre o=new Offre(0, nom, prix, descri,imgs);
 			try {
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");  
+				LocalDateTime now = LocalDateTime.now();  
+				System.out.println(dtf.format(now));   
+				o.setDate(dtf.format(now) );
 				o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
-				o.creator=userRepo.findById(1).get(); 
+				o.creator=userRepo.findByidFirebase(creatorID); 
 				repo.save(o);	 	
-				System.out.println("added "+o.getNom());
+				System.out.println("added "+creatorID +"------"+o.creator);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-			}
-			
-			
-//			 */
-		 
-			
-		} 
-	
-		
+			} 
+		}  
         logger.info(String.format("File name '%s' uploaded successfully.", file.getOriginalFilename()));
         return ResponseEntity.ok().build();
     }

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
   
 @Entity(name = "Offre") 
@@ -28,7 +29,7 @@ public class Offre {
    private String prix; 
    private String descri;  
    private String address; 
-   private Date date; 
+   private String date; 
    private String[] imgs;
    
    @OneToMany(mappedBy = "offre", fetch = FetchType.LAZY,  //nom de attr de rela
@@ -45,9 +46,9 @@ public class Offre {
    @JoinColumn(name = "user_id", nullable = false) //fk column name
    public User creator;
    
-   
+   @JsonIgnore
    @OneToMany(mappedBy = "rated_offre", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   private List<Rating> ratings;
+   public List<Rating> ratings;
    
    
    public Offre() { }
@@ -96,10 +97,10 @@ public String getAddress() {
 public void setAddress(String address) {
 	this.address = address;
 }
-public Date getDate() {
+public String getDate() {
 	return date;
 }
-public void setDate(Date date) {
+public void setDate(String date) {
 	this.date = date;
 }
 @Override
@@ -107,7 +108,7 @@ public String toString() {
 	return "Service [idService=" + idService + ", nom=" + nom + ", prix=" + prix + ", descri=" + descri + ", imgs="
 			+ Arrays.toString(imgs) + "]";
 }
-public Offre(int idService, String nom, String prix, String descri, String address, Date date, String[] imgs,
+public Offre(int idService, String nom, String prix, String descri, String address, String date, String[] imgs,
 		List<HistoTravaux> mes_travaux, Categorie categorie, User creator) {
 	super();
 	this.idService = idService;

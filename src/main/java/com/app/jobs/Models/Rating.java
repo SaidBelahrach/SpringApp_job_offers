@@ -17,9 +17,9 @@ public class Rating {
    @GeneratedValue(strategy= GenerationType.AUTO)
    @Column(updatable = false, nullable = false)
    private int num;
-   private String points;
+   private int points;
    private String comment;
-   private Date date;
+   private String date;
 
    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
    @ManyToOne( fetch = FetchType.LAZY, optional = false)
@@ -33,49 +33,65 @@ public class Rating {
    		
    public Rating() { }
 
-public Rating(int num, String points, String comment, Date date) {
-	super();
-	this.num = num;
-	this.points = points;
-	this.comment = comment;
-	this.date = date;
-}
-
-public int getNum() {
-	return num;
-}
-public void setNum(int num) {
-	this.num = num;
-}
-
-public String getPoints() {
-	return points;
-}
-
-public void setPoints(String points) {
-	this.points = points;
-}
-
-public String getComment() {
-	return comment;
-}
-
-public void setComment(String comment) {
-	this.comment = comment;
-}
-
-public Date getDate() {
-	return date;
-}
-
-public void setDate(Date date) {
-	this.date = date;
-}
-
-@Override
-public String toString() {
-	return "Demande [num=" + num + ", points=" + points + ", comment=" + comment + ", date=" + date + "]";
-}
-   
+	public Rating(int num, int points, String comment, String date) {
+		super();
+		this.num = num;
+		this.points = points;
+		this.comment = comment;
+		this.date = date;
+	}
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
+	
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public Offre getRated_offre() {
+		return rated_offre;
+	}
+	
+	public void setRated_offre(Offre rated_offre) {
+		this.rated_offre = rated_offre;
+	}
+	
+	public User getUser_rator() {
+		return user_rator;
+	}
+	
+	public void setUser_rator(User user_rator) {
+		this.user_rator = user_rator;
+	}
+	
+	@Override
+	public String toString() {
+		return "Rating [num=" + num + ", points=" + points + ", comment=" + comment + ", date=" + date + ", rated_offre="
+				+ rated_offre + ", user_rator=" + user_rator + "]";
+	} 
 
 }

@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany; 
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore; 
 @Entity 
 public class User {
    @Id
@@ -22,15 +24,17 @@ public class User {
    private String idFirebase;
    private String tel;
    private String adress;
+   private String specialite;
    private Boolean isConnected; 
    private String imgPath;
    
-
+   @JsonIgnore
    @OneToMany(mappedBy = "user_rator", targetEntity=Rating.class)
    private List<Rating> user_ratings;
    
+   @JsonIgnore
    @OneToMany(mappedBy = "creator", targetEntity=Offre.class )  
-	private List<Offre> user_offres; 
+	public List<Offre> user_offres; 
    
 //   @OneToMany(mappedBy = "commenter", targetEntity=Comment.class )  
 //	private List<Offre> user_comments;  
@@ -102,6 +106,12 @@ public void setIdFirebase(String idFirebase) {
 	this.idFirebase = idFirebase;
 }
 
+public String getspecialite() {
+	return specialite;
+}
+public void setspecialite(String specialité) {
+	this.specialite = specialité;
+}
 public User(int idUser, String email, String password, String nomComplet, String idFirebase, String tel, String adress,
 		Boolean isConnected, String imgPath, List<Offre> user_offres, List<Offre> user_comments) {
 	super();
