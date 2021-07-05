@@ -105,15 +105,19 @@ public String getIdFirebase() {
 public void setIdFirebase(String idFirebase) {
 	this.idFirebase = idFirebase;
 }
-
-public String getspecialite() {
+  
+public String getSpecialite() {
 	return specialite;
 }
-public void setspecialite(String specialité) {
-	this.specialite = specialité;
+public void setSpecialite(String specialite) {
+	this.specialite = specialite;
 }
+public String getPassword() {
+	return password;
+}
+ 
 public User(int idUser, String email, String password, String nomComplet, String idFirebase, String tel, String adress,
-		Boolean isConnected, String imgPath, List<Offre> user_offres, List<Offre> user_comments) {
+		String specialite, Boolean isConnected, String imgPath, List<Rating> user_ratings, List<Offre> user_offres) {
 	super();
 	this.idUser = idUser;
 	this.email = email;
@@ -122,9 +126,11 @@ public User(int idUser, String email, String password, String nomComplet, String
 	this.idFirebase = idFirebase;
 	this.tel = tel;
 	this.adress = adress;
+	this.specialite = specialite;
 	this.isConnected = isConnected;
 	this.imgPath = imgPath;
-	this.user_offres = user_offres; 
+	this.user_ratings = user_ratings;
+	this.user_offres = user_offres;
 }
 @Override
 public String toString() {

@@ -1,4 +1,6 @@
 package com.app.jobs.Controllers;   
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;  
 import org.springframework.beans.factory.annotation.Autowired; 
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.app.jobs.Models.FileUtil;
 import com.app.jobs.Models.Offre;
 import com.app.jobs.Models.Rating;
 import com.app.jobs.Models.Statis;
@@ -49,12 +53,37 @@ public class UserController {
 	}
 	@CrossOrigin
 	@PostMapping("/users")
-	public List<User> add(@RequestBody  User user ){  
-		try {
-			userRepo.save(user);	  
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	public List<User> add(@RequestParam("file") MultipartFile file,
+			  @RequestParam("idUser") int idUser,
+			  @RequestParam("nomComplet") String nomComplet,
+			  @RequestParam("email") String email,
+			  @RequestParam("password") String password,
+			  @RequestParam("tel") String tel,
+			  @RequestParam("adress") String adress,
+			  @RequestParam("idFirebase") String idFirebase,
+			  @RequestParam("specialite") String specialite) 
+	{ 
+		
+		if(!file.isEmpty()) {
+			String fileName = file.getOriginalFilename();
+			File currDir = new File(""); 
+			String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
+			
+			try {
+			// This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
+				FileUtil.fileupload(file.getBytes(), path , fileName);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+			String imgPath="http://localhost:8080/"+fileName;
+			User user=new User(idUser, email, password, nomComplet, idFirebase, tel, adress, specialite, false, imgPath, null, null);
+			try {
+			 	 userRepo.save(user);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} 
+		} 
 		return userRepo.findAll(); 
 	} 
 //	
