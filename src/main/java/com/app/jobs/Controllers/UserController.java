@@ -63,7 +63,9 @@ public class UserController {
 			  @RequestParam("idFirebase") String idFirebase,
 			  @RequestParam("specialite") String specialite) 
 	{ 
-		
+
+		User usr=userRepo.findByidFirebase(idFirebase);
+		if(usr!=null) return userRepo.findAll(); 
 		if(!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			File currDir = new File(""); 

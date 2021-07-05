@@ -124,7 +124,6 @@ public class OffreController {
     								  @RequestParam("categorie") String categorie,
     								  @RequestParam("creatorID") String creatorID,
     								  @RequestParam("prix") String prix) { 
- 
 		if(!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			File currDir = new File(""); 
