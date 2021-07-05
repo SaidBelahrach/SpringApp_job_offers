@@ -69,32 +69,32 @@ public class OffreController {
 			  @RequestParam("creatorID") String creatorID,
 			  @RequestParam("prix") String prix) { 
 		if(!file.isEmpty()) {
-		String fileName = file.getOriginalFilename();
-		File currDir = new File(""); 
-		String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
-		
-		try {
-		// This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
-			FileUtil.fileupload(file.getBytes(), path , fileName);
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		String[] imgs = new String[]{"http://localhost:8080/"+fileName};
-		Offre o=repo.findById(idService).get();
-		o.setImgs(imgs);
-		o.setAddress(address);
-		o.setDescri(descri);
-		o.setNom(nom);
-		o.setPrix(prix); 
-		System.out.println(o);
-		try {
-			o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
-			o.creator=userRepo.findByidFirebase(creatorID); 
-			repo.save(o);	 	 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} 
+			String fileName = file.getOriginalFilename();
+			File currDir = new File(""); 
+			String path =currDir.getAbsolutePath()+"\\src\\main\\resources\\static\\uploads\\";//"C:\\Users\\said.leader\\eclipse-workspace\\spring_app\\src\\main\\resources\\static\\uploads\\";
+			
+			try {
+			// This method is a package for writing files. In the util class, import the package and use it. The method will be given later				
+				FileUtil.fileupload(file.getBytes(), path , fileName);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+			String[] imgs = new String[]{"http://localhost:8080/"+fileName};
+			Offre o=repo.findById(idService).get();
+			o.setImgs(imgs);
+			o.setAddress(address);
+			o.setDescri(descri);
+			o.setNom(nom);
+			o.setPrix(prix); 
+			System.out.println(o);
+			try {
+				o.categorie=CategorieRepo.findById(Integer.parseInt(categorie)).get(); 
+				o.creator=userRepo.findByidFirebase(creatorID); 
+				repo.save(o);	 	 
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} 
 		}  
 		logger.info(String.format("File name '%s' uploaded successfully.", file.getOriginalFilename()));
 		 return repo.findAll();
