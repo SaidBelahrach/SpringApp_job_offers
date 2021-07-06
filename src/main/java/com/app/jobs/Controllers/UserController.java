@@ -19,6 +19,7 @@ import com.app.jobs.Repositories.UserRepo;
 @RestController
  @CrossOrigin(origins = "http://localhost:3000")
 public class UserController { 
+	
 	@Autowired
 	private UserRepo userRepo;   
 	
@@ -44,7 +45,11 @@ public class UserController {
 	
 	@GetMapping("/users/getuser")
 	public Optional<User> getUserByidFirebase(@RequestParam("idFirebase") String idFirebase){ 
-		return Optional.ofNullable(userRepo.findByidFirebase(idFirebase));
+		List<User> usr = userRepo.findByidFirebase(idFirebase);
+		User user = usr.get(0).getNomComplet()=="undefined"?usr.get(1):usr.get(0);
+		System.out.println(user);
+		
+		return Optional.ofNullable(user);
 	}
 	@CrossOrigin
 	@PostMapping("/users")
@@ -59,9 +64,15 @@ public class UserController {
 			  @RequestParam("specialite") String specialite) 
 	{ 
 
+<<<<<<< HEAD
 		User usr=userRepo.findByidFirebase(idFirebase); 
 		if(usr!=null) return userRepo.findAll(); 
 			String imgPath="http://localhost:8080/user.png";
+=======
+		
+		
+			String imgPath="http://localhost:8080/person2.png";
+>>>>>>> branch 'master' of https://github.com/SaidBelahrach/SpringApp_job_offers
 			User user=new User(idUser, email, password, nomComplet, idFirebase, tel, adress, specialite, false, imgPath, null, null);
 			try {
 			 	 userRepo.save(user);
@@ -73,7 +84,9 @@ public class UserController {
 //	
 	@PatchMapping("/users")
 	public List<User> update(@RequestBody  User user){ 
-		User usr=userRepo.findByidFirebase(user.getIdFirebase());
+		List<User> usrT = userRepo.findByidFirebase(user.getIdFirebase());
+
+		User usr=usrT.get(0).getNomComplet()=="undefined"?usrT.get(1):usrT.get(0);
 		
 		usr.setAdress(user.getAdress());
 		usr.setEmail(user.getEmail()); 
