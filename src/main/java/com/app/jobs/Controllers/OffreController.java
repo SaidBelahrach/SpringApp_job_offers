@@ -52,10 +52,12 @@ public class OffreController {
 	} 
 	
 //	@PostMapping("/offres")
-//	public List<Offre> add(@RequestBody  Offre offre ){  
-//		repo.save(offre);	 
-//		System.out.println("added "+offre.getNom());
-//		return repo.findAll(); 
+//	public List<Offre> chercher(
+//			  @RequestParam("nom") String nom,
+//			  @RequestParam("descri") String categorie,
+//			  @RequestParam("address") String address ){  
+//		
+//		return repo.find(nom, address, categorie); 
 //	} 
 //	
 	@CrossOrigin

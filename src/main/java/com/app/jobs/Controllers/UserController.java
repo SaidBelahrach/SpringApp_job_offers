@@ -1,6 +1,4 @@
-package com.app.jobs.Controllers;   
-import java.io.File;
-import java.io.IOException;
+package com.app.jobs.Controllers;    
 import java.util.List;
 import java.util.Optional;  
 import org.springframework.beans.factory.annotation.Autowired; 
@@ -12,10 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.app.jobs.Models.FileUtil;
+import org.springframework.web.bind.annotation.RestController; 
 import com.app.jobs.Models.Offre;
 import com.app.jobs.Models.Rating;
 import com.app.jobs.Models.Statis;
@@ -66,7 +61,7 @@ public class UserController {
 
 		User usr=userRepo.findByidFirebase(idFirebase); 
 		if(usr!=null) return userRepo.findAll(); 
-			String imgPath="http://localhost:8080/person2.png";
+			String imgPath="http://localhost:8080/user.png";
 			User user=new User(idUser, email, password, nomComplet, idFirebase, tel, adress, specialite, false, imgPath, null, null);
 			try {
 			 	 userRepo.save(user);
@@ -85,7 +80,7 @@ public class UserController {
 		if(user.getImgPath()!= null) {
 			usr.setImgPath(user.getImgPath()); 
 		}else {
-			usr.setImgPath("http://localhost:8080/person2.png"); 
+			usr.setImgPath("http://localhost:8080/user.png"); 
 		}
 	
 		usr.setSpecialite(user.getSpecialite());
